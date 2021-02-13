@@ -10,8 +10,7 @@ const DefaultLayout = (props) => (
     <div>
       <div className="topnav" id="myTopnav">
         <Link href="/">Home</Link>
-        <Link href="/admin">Admin</Link>
-        <Link href="/contact-us">Contact Us</Link>
+        <Link href="/login">Login</Link>
       </div>
       <div>{props.children}</div>
     </div>
