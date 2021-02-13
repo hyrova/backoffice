@@ -17,7 +17,7 @@ function DefaultLayout(props) {
   const hide = () => setopen(false);
   const show = () => setopen(true);
 
-  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
+  // const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   return (
     <>
@@ -26,8 +26,8 @@ function DefaultLayout(props) {
         <meta charSet="utf-8" />
       </Head>
       <SwipeableDrawer
-        disableBackdropTransition={!iOS}
-        disableDiscovery={iOS}
+        // disableBackdropTransition={!iOS}
+        // disableDiscovery={iOS}
         anchor="left"
         open={open}
         onClose={hide}
