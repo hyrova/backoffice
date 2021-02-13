@@ -2,22 +2,27 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  CardContent,
+  Collapse,
   SwipeableDrawer,
   Typography,
+  IconButton,
 } from "@material-ui/core";
 import { ExpandMoreOutlined } from "@material-ui/icons";
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
+import Dropdown from "../components/Dropdown";
 import { useToggle } from "../utils/hook";
 
 function DefaultLayout(props) {
-  const [open, setopen] = useState(true);
+  const [open, setopen] = useState(false);
 
   const hide = () => setopen(false);
   const show = () => setopen(true);
 
-  // const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
+  // const [on, toggle] = useToggle();
 
   return (
     <>
@@ -26,30 +31,17 @@ function DefaultLayout(props) {
         <meta charSet="utf-8" />
       </Head>
       <SwipeableDrawer
-        // disableBackdropTransition={!iOS}
-        // disableDiscovery={iOS}
+        disableBackdropTransition={!iOS}
+        disableDiscovery={iOS}
         anchor="left"
         open={open}
         onClose={hide}
         onOpen={show}
       >
-        Test
-        <Accordion elevation={0} variant="outlined">
-          <AccordionSummary
-            expandIcon={<ExpandMoreOutlined />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography>Accordion 1</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
+        <Dropdown>
+          <Dropdown.Button>Test</Dropdown.Button>
+          <Dropdown.Content>APPEAR</Dropdown.Content>
+        </Dropdown>
       </SwipeableDrawer>
       <div>
         <div>{props.children}</div>
