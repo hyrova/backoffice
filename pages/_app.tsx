@@ -1,8 +1,8 @@
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import { useEffect } from "react";
 import LayoutWrapper from "../src/layouts/layout-wrapper";
-import "../styles/globals.css";
 import { darkTheme } from "../src/theme/theme";
+import "../styles/globals.scss";
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
