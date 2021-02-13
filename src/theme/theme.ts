@@ -28,5 +28,10 @@ const options = (dark: boolean): ThemeOptions => {
     },
   };
 };
-export const darkTheme = createMuiTheme(options(true));
+// export const darkTheme = createMuiTheme(options(true));
+export const darkTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
+  },
+});
 export const lightTheme = createMuiTheme(options(false));

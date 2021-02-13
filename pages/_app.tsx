@@ -1,6 +1,8 @@
+import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import { useEffect } from "react";
 import LayoutWrapper from "../src/layouts/layout-wrapper";
 import "../styles/globals.css";
+import { darkTheme } from "../src/theme/theme";
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -11,9 +13,13 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   return (
-    <LayoutWrapper {...pageProps}>
-      <Component {...pageProps} />
-    </LayoutWrapper>
+    <ThemeProvider theme={darkTheme}>
+      {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+      <CssBaseline />
+      <LayoutWrapper {...pageProps}>
+        <Component {...pageProps} />
+      </LayoutWrapper>
+    </ThemeProvider>
   );
 }
 
