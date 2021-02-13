@@ -7,7 +7,13 @@ const GuestLayout = (props) => (
       <title>Default</title>
       <meta charSet="utf-8" />
     </Head>
-    <div>{props.children}</div>
+    <div>
+      <div className="topnav" id="myTopnav">
+        <Link href="/">Home</Link>
+        <Link href="/login">Login</Link>
+      </div>
+      <div>{props.children}</div>
+    </div>
   </>
 );
 
