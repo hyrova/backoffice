@@ -17,6 +17,12 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400,500,700&display=swap"
           />
+          <link
+            rel="preload"
+            href="/fonts/blackout/blackout.woff2"
+            as="font"
+            crossOrigin=""
+          />
         </Head>
         <body>
           <Main />
