@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Container from "@material-ui/core/Container";
 
 const GuestLayout = (props) => (
   <>
@@ -6,7 +7,9 @@ const GuestLayout = (props) => (
       <title>Hyrova admin - Guest</title>
       <meta charSet="utf-8" />
     </Head>
-    <main>{props.children}</main>
+    <Container component="main" maxWidth="sm">
+      {props.children}
+    </Container>
   </>
 );
 
