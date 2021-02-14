@@ -4,7 +4,16 @@ import React from "react";
 import styles from "../styles/pages/Login.module.scss";
 
 function Login() {
-  return <div className={styles.container}>login</div>;
+  return (
+    <>
+      <Head>
+        <title>Hyrova admin - login</title>
+      </Head>
+      <div className={styles.container}>
+
+      </div>
+    </>
+  );
 }
 
 Login.layout = "guest";

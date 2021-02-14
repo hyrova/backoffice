@@ -6,7 +6,7 @@ import { darkTheme } from "../src/theme/theme";
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en">
+      <Html lang="fr">
         <Head>
           <meta name="theme-color" content={darkTheme.palette.primary.main} />
           <link

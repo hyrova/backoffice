@@ -27,7 +27,7 @@ function DefaultLayout(props) {
   return (
     <>
       <Head>
-        <title>Default</title>
+        <title>Hyrova admin - default</title>
         <meta charSet="utf-8" />
       </Head>
       <SwipeableDrawer
