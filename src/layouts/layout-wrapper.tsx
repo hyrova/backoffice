@@ -9,12 +9,15 @@ const layouts = {
 };
 
 const fetchUser = async () => {
-  return setTimeout(() => {
+  return new Promise(function (resolve, reject) {
+    // Setting 2000 ms time
+    setTimeout(resolve, 2000);
+  }).then(function () {
     return {
       pseudal: "yolo",
       email: "yolo@mail.com",
     };
-  }, 2000);
+  });
 };
 
 const LayoutWrapper = (props) => {
@@ -46,6 +49,8 @@ const LayoutWrapper = (props) => {
         console.log("Pas de user, on devrait rediriger");
         // Redirection mais on s'en balec
       }
+
+      console.log(newUser);
 
       setuser(newUser);
       setloading(false);

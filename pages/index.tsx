@@ -5,9 +5,11 @@ import { useAppContext } from "../src/context/state";
 import styles from "../styles/pages/Home.module.scss";
 
 export default function Home() {
+  const { user } = useAppContext();
 
   return (
     <div className={styles.container}>
+      Pseudo :{user.pseudal}
       {/* <p>{count}</p>
       <Button variant="contained" onClick={increment}>
         Increment
