@@ -1,6 +1,5 @@
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import { useEffect } from "react";
-import Guard from "../src/components/Guard";
 import Nav from "../src/components/Nav";
 import { AppWrapper } from "../src/context/state";
 import LayoutWrapper from "../src/layouts/layout-wrapper";
