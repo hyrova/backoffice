@@ -1,5 +1,6 @@
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import { useEffect } from "react";
+import Guard from "../src/components/Guard";
 import Nav from "../src/components/Nav";
 import { AppWrapper } from "../src/context/state";
 import LayoutWrapper from "../src/layouts/layout-wrapper";
@@ -14,14 +15,11 @@ function MyApp({ Component, pageProps }) {
     }
   }, []);
 
-  // const layout = Component.Layout || DefaultLayout;
-
   return (
     <ThemeProvider theme={darkTheme}>
       {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
       <CssBaseline />
       <AppWrapper>
-        <Nav />
         <LayoutWrapper {...pageProps}>
           <Component {...pageProps} />
         </LayoutWrapper>
@@ -29,16 +27,5 @@ function MyApp({ Component, pageProps }) {
     </ThemeProvider>
   );
 }
-
-// MyApp.getInitialProps = async ({ Component, ctx }) => {
-//   return {
-//     pageProps: {
-//       // Call page-level getInitialProps
-//       ...(Component.getInitialProps
-//         ? await Component.getInitialProps(ctx)
-//         : {}),
-//     },
-//   };
-// };
 
 export default MyApp;

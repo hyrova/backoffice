@@ -5,15 +5,6 @@ import { useAppContext } from "../src/context/state";
 import styles from "../styles/pages/Home.module.scss";
 
 export default function Home() {
-  // const { count, setcount } = useAppContext();
-
-  // const increment = () => {
-  //   setcount(count + 1);
-  // };
-
-  // const decrement = () => {
-  //   setcount(count - 1);
-  // };
 
   return (
     <div className={styles.container}>

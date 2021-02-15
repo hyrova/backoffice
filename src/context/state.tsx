@@ -1,16 +1,16 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import createPersistedState from 'use-persisted-state';
-
+import createPersistedState from "use-persisted-state";
 
 const AppContext = createContext(null);
-const useCounterState = createPersistedState('count');
+const useTokenState = createPersistedState("token");
+const useUserState = createPersistedState("user");
 
 export function AppWrapper({ children }) {
+  const [token, settoken] = useTokenState(null);
   const [user, setuser] = useState({});
-  const [count, setcount] = useCounterState(0);
 
   return (
-    <AppContext.Provider value={{ user, setuser, count, setcount }}>
+    <AppContext.Provider value={{ token, settoken, user, setuser }}>
       {children}
     </AppContext.Provider>
   );
