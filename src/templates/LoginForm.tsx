@@ -2,10 +2,10 @@ import { Grid, makeStyles, Typography, useMediaQuery } from "@material-ui/core";
 import AppTextField from "../components/Form/TextField";
 import AppButton from "../components/Form/Button";
 import Image from "next/image";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 export default function LoginForm() {
-  const matches = useMediaQuery("(min-width:600px)");
-
   const useStyles = makeStyles((theme) => ({
     titles: {
       marginTop: theme.spacing(2),
@@ -21,6 +21,22 @@ export default function LoginForm() {
   }));
 
   const classes = useStyles();
+
+  const LoginSchema = Yup.object().shape({
+    login: Yup.string().required(),
+    password: Yup.string().required(),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      login: "",
+      password: "",
+    },
+    validationSchema: LoginSchema,
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
 
   return (
     <>
@@ -43,22 +59,22 @@ export default function LoginForm() {
           Accéder à Hyrova
         </Typography>
       </Grid>
-      <form className={classes.form} noValidate>
+      <form className={classes.form} onSubmit={formik.handleSubmit}>
         <AppTextField
-          required
-          id="email"
+          id="login"
           label="Login"
-          name="email"
+          name="login"
           autoComplete="email"
           autoFocus
+          formik={formik}
         />
         <AppTextField
-          required
           id="password"
           name="password"
           label="Mot de passe"
           type="password"
           autoComplete="current-password"
+          formik={formik}
         />
         <Grid container justify="flex-end">
           <AppButton className={classes.submit}>Se connecter</AppButton>
