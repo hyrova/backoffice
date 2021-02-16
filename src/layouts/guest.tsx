@@ -7,9 +7,7 @@ const GuestLayout = (props) => (
       <title>Hyrova admin - Guest</title>
       <meta charSet="utf-8" />
     </Head>
-    <Container component="main" maxWidth="sm">
-      {props.children}
-    </Container>
+    {props.children}
   </>
 );
 

@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { useAppContext } from "../context/state";
 import DefaultLayout from "./default";
 import GuestLayout from "./guest";
 
@@ -8,75 +6,7 @@ const layouts = {
   guest: GuestLayout,
 };
 
-const fetchUser = async () => {
-  return new Promise(function (resolve, reject) {
-    // Setting 2000 ms time
-    setTimeout(resolve, 2000);
-  }).then(function () {
-    return {
-      pseudal: "yolo",
-      email: "yolo@mail.com",
-    };
-  });
-};
-
 const LayoutWrapper = (props) => {
-  const { token, user, setuser } = useAppContext();
-  const [loading, setloading] = useState(true);
-
-  useEffect(() => {
-    console.log(props.children.type.auth);
-    console.log(
-      "auth requis:",
-      props.children.type.auth === undefined ? true : props.children.type.auth
-    );
-    checkUser();
-  }, []);
-
-  const checkUser = async () => {
-    const authRequired =
-      props.children.type.auth === undefined ? true : props.children.type.auth;
-
-    if (authRequired) {
-      if (!token) {
-        console.log("Pas de token, on devrait rediriger");
-        // Redirection mais on s'en balec
-      }
-
-      const newUser = await fetchUser();
-
-      if (!newUser) {
-        console.log("Pas de user, on devrait rediriger");
-        // Redirection mais on s'en balec
-      }
-
-      console.log(newUser);
-
-      setuser(newUser);
-      setloading(false);
-    } else {
-      setloading(false);
-      if (!token) {
-        console.log("Pas de token, mais la connexion n'est pas requise");
-      }
-
-      const newUser = await fetchUser();
-      if (newUser) {
-        setuser(newUser);
-      } else {
-        console.log("Pas de user, mais la connexion n'est pas requise");
-      }
-    }
-  };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  /**
-   * Logique affichage Layout
-   */
-
   // to get the text value of the assigned layout of each component
   const Layout = layouts[props.children.type.layout];
   // if we have a registered layout render children with said layout

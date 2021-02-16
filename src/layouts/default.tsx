@@ -13,7 +13,6 @@ import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
 import Dropdown from "../components/Dropdown";
-import Nav from "../components/Nav";
 import { useToggle } from "../utils/hook";
 
 function DefaultLayout(props) {
