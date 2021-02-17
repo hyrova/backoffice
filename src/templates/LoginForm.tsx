@@ -4,8 +4,16 @@ import AppButton from "../components/Form/Button";
 import Image from "next/image";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import useFetch from "use-http";
+import { ToggleCheckBoxOutlineBlank } from "material-ui/svg-icons";
+import { useAppContext } from "../context/state";
+import { useRouter } from "next/router";
 
 export default function LoginForm() {
+  const { post } = useFetch("http://localhost/api/login");
+  const {settoken} = useAppContext();
+  const router = useRouter()
+
   const useStyles = makeStyles((theme) => ({
     titles: {
       marginTop: theme.spacing(2),
@@ -34,9 +42,16 @@ export default function LoginForm() {
     },
     validationSchema: LoginSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      _login(values);
     },
   });
+
+  const _login = (credentials) => {
+    post({...credentials, device: 'device'}).then(token => {
+      settoken(token)
+      router.replace('/')
+    });
+  };
 
   return (
     <>
