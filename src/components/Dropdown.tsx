@@ -2,8 +2,12 @@ import {
   Collapse,
   Grid,
   ButtonBase,
+  makeStyles,
+  Link,
+  Icon,
 } from "@material-ui/core";
 import { ExpandLessRounded, ExpandMoreRounded } from "@material-ui/icons";
+import { useRouter } from "next/router";
 import { createContext, useContext } from "react";
 import { useToggle } from "../utils/hook";
 
@@ -24,13 +28,26 @@ const useDropdownContext = (): DropdownProps => {
   return context;
 };
 
-function Button({ children }) {
+function Button({ children, icon }) {
   const { toggle, on } = useDropdownContext();
+
+  const useStyles = makeStyles((theme) => ({
+    button: {
+      width: "100%",
+      padding: theme.spacing(2, 3),
+      color: on ? theme.palette.primary.main : "inherit",
+    },
+    icon: {
+      marginRight: theme.spacing(2),
+      width: 24,
+    },
+  }));
+
+  const classes = useStyles();
+
   return (
-    <ButtonBase
-      onClick={toggle}
-      style={{ width: "300px", padding: "12px 16px" }}
-    >
+    <ButtonBase onClick={toggle} className={classes.button}>
+      <Icon className={classes.icon}>{icon}</Icon>
       <Grid container justify="space-between" alignItems="center">
         {children}
         {on ? <ExpandLessRounded /> : <ExpandMoreRounded />}
@@ -41,10 +58,42 @@ function Button({ children }) {
 
 function Content({ children }) {
   const { on } = useDropdownContext();
+
+  const useStyles = makeStyles((theme) => ({
+    collapse: {
+      maxWidth: 300,
+      width: "100%",
+    },
+  }));
+
+  const classes = useStyles();
+
   return (
-    <Collapse in={on} timeout="auto">
+    <Collapse in={on} timeout="auto" className={classes.collapse}>
       {children}
     </Collapse>
+  );
+}
+
+function Anchor({ children, href, active }) {
+  const useStyles = makeStyles((theme) => ({
+    link: {
+      padding: theme.spacing(2, 3),
+      width: "100%",
+      paddingLeft: 48 + theme.spacing(2),
+      backgroundColor: active ? theme.palette.primary.main : "inherit",
+    },
+  }));
+
+  const classes = useStyles();
+  const router = useRouter();
+
+  return (
+    <ButtonBase onClick={() => router.push(href)} className={classes.link}>
+      <Grid container justify="space-between" alignItems="center">
+        {children}
+      </Grid>
+    </ButtonBase>
   );
 }
 
@@ -60,5 +109,6 @@ function Dropdown({ children }) {
 
 Dropdown.Button = Button;
 Dropdown.Content = Content;
+Dropdown.Link = Anchor;
 
 export default Dropdown;

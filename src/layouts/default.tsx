@@ -7,12 +7,14 @@ import {
   SwipeableDrawer,
   Typography,
   IconButton,
+  useMediaQuery,
 } from "@material-ui/core";
 import { ExpandMoreOutlined } from "@material-ui/icons";
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
 import Dropdown from "../components/Dropdown";
+import Navigation from "../components/Navigation";
 import { useToggle } from "../utils/hook";
 
 function DefaultLayout(props) {
@@ -23,6 +25,7 @@ function DefaultLayout(props) {
 
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   // const [on, toggle] = useToggle();
+  const matches = useMediaQuery("(min-width:600px)");
 
   return (
     <>
@@ -30,21 +33,11 @@ function DefaultLayout(props) {
         <title>Hyrova admin - default</title>
         <meta charSet="utf-8" />
       </Head>
-      <SwipeableDrawer
-        disableBackdropTransition={!iOS}
-        disableDiscovery={iOS}
-        anchor="left"
-        open={open}
-        onClose={hide}
-        onOpen={show}
-      >
-        <Dropdown>
-          <Dropdown.Button>Test</Dropdown.Button>
-          <Dropdown.Content>APPEAR</Dropdown.Content>
-        </Dropdown>
-      </SwipeableDrawer>
-      <div>
-        <div>{props.children}</div>
+      <div className="page-container">
+        <Navigation />
+        <div>
+          <div>{props.children}</div>
+        </div>
       </div>
     </>
   );
