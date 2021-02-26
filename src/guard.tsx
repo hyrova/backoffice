@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "./context/state";
 import { useRouter } from "next/router";
+import Grid from "@material-ui/core/Grid";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const fetchUser = async () => {
   return new Promise(function (resolve, reject) {
@@ -55,7 +57,20 @@ const Guard = ({ auth, children }) => {
   };
 
   if (loading) {
-    return <div>Loading en attendant de vérifier les infos users...</div>;
+    return (
+      <div>
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justify="center"
+          style={{ minHeight: "100vh" }}
+        >
+          <CircularProgress />
+        </Grid>{" "}
+      </div>
+    );
   }
 
   return children;
