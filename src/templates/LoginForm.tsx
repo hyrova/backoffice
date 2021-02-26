@@ -1,18 +1,19 @@
-import { Grid, makeStyles, Typography, useMediaQuery } from "@material-ui/core";
+import { Grid, makeStyles, Typography } from "@material-ui/core";
 import AppTextField from "../components/Form/TextField";
 import AppButton from "../components/Form/Button";
 import Image from "next/image";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import useFetch from "use-http";
-import { ToggleCheckBoxOutlineBlank } from "material-ui/svg-icons";
 import { useAppContext } from "../context/state";
 import { useRouter } from "next/router";
 
 export default function LoginForm() {
-  const { post } = useFetch("http://localhost/api/login");
-  const {settoken} = useAppContext();
-  const router = useRouter()
+  const { post, response, loading, error } = useFetch(
+    "http://localhost/api/login"
+  );
+  const { settoken } = useAppContext();
+  const router = useRouter();
 
   const useStyles = makeStyles((theme) => ({
     titles: {
@@ -21,8 +22,10 @@ export default function LoginForm() {
     form: {
       paddingTop: theme.spacing(3),
     },
-    submit: {
+    actions: {
       margin: theme.spacing(3, 0, 2),
+    },
+    button: {
       fontWeight: "bold",
       textTransform: "none",
     },
@@ -46,11 +49,14 @@ export default function LoginForm() {
     },
   });
 
-  const _login = (credentials) => {
-    post({...credentials, device: 'device'}).then(token => {
-      settoken(token)
-      router.replace('/')
-    });
+  const _login = async (credentials) => {
+    // TODO detect device
+    const token = await post({ ...credentials, device: "device" });
+
+    if (response.ok) {
+      settoken(token);
+      router.replace("/");
+    }
   };
 
   return (
@@ -75,6 +81,11 @@ export default function LoginForm() {
         </Typography>
       </Grid>
       <form className={classes.form} onSubmit={formik.handleSubmit}>
+        {error && (
+          <Typography variant="caption" color="error">
+            Identifiants incorrects
+          </Typography>
+        )}
         <AppTextField
           id="login"
           label="Login"
@@ -82,6 +93,7 @@ export default function LoginForm() {
           autoComplete="email"
           autoFocus
           formik={formik}
+          disabled={loading}
         />
         <AppTextField
           id="password"
@@ -90,9 +102,12 @@ export default function LoginForm() {
           type="password"
           autoComplete="current-password"
           formik={formik}
+          disabled={loading}
         />
-        <Grid container justify="flex-end">
-          <AppButton className={classes.submit}>Se connecter</AppButton>
+        <Grid container justify="flex-end" className={classes.actions}>
+          <AppButton className={classes.button} loading={loading}>
+            Se connecter
+          </AppButton>
         </Grid>
       </form>
     </>

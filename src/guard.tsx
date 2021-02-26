@@ -68,7 +68,7 @@ const Guard = ({ auth, children }) => {
           style={{ minHeight: "100vh" }}
         >
           <CircularProgress />
-        </Grid>{" "}
+        </Grid>
       </div>
     );
   }
