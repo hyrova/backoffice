@@ -8,30 +8,27 @@ import useFetch from "use-http";
 import { useAppContext } from "../context/state";
 import { useRouter } from "next/router";
 
+const useStyles = makeStyles((theme) => ({
+  titles: {
+    marginTop: theme.spacing(2),
+  },
+  form: {
+    paddingTop: theme.spacing(3),
+  },
+  actions: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  button: {
+    fontWeight: "bold",
+    textTransform: "none",
+  },
+}));
+
 export default function LoginForm() {
-  const { post, response, loading, error } = useFetch(
-    "http://localhost/api/login"
-  );
   const { settoken } = useAppContext();
   const router = useRouter();
-
-  const useStyles = makeStyles((theme) => ({
-    titles: {
-      marginTop: theme.spacing(2),
-    },
-    form: {
-      paddingTop: theme.spacing(3),
-    },
-    actions: {
-      margin: theme.spacing(3, 0, 2),
-    },
-    button: {
-      fontWeight: "bold",
-      textTransform: "none",
-    },
-  }));
-
   const classes = useStyles();
+  const { post, response, loading, error } = useFetch("/login");
 
   const LoginSchema = Yup.object().shape({
     login: Yup.string().required(),
@@ -80,6 +77,7 @@ export default function LoginForm() {
           Accéder à Hyrova
         </Typography>
       </Grid>
+
       <form className={classes.form} onSubmit={formik.handleSubmit}>
         {error && (
           <Typography variant="caption" color="error">

@@ -4,14 +4,14 @@ import {
   LinearProgress,
   createStyles,
   makeStyles,
-  Theme,
 } from "@material-ui/core";
 
 interface AppButtonProps extends ButtonProps {
+  /** If `true`, the button will display a LinearProgress at the bottom */
   loading?: boolean;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     wrapper: {
       position: "relative",
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
       position: "absolute",
       width: "100%",
       bottom: 0,
-      height: 2
+      height: 2,
     },
   })
 );
@@ -30,19 +30,21 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function AppButton(props: AppButtonProps) {
   const classes = useStyles();
 
+  const { disabled, loading, children, ...rest } = props;
+
   return (
     <div className={classes.wrapper}>
       <Button
+        {...rest}
         type="submit"
         variant="contained"
         color="primary"
-        disabled={props.loading}
-        {...props}
+        disabled={disabled || loading}
       >
-        {props.children}
+        {children}
       </Button>
       <div className={classes.buttonProgress}>
-        {props.loading && <LinearProgress color="primary" />}
+        {loading && <LinearProgress color="primary" />}
       </div>
     </div>
   );

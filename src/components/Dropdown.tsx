@@ -12,7 +12,9 @@ import { createContext, useContext } from "react";
 import { useToggle } from "../utils/hook";
 
 interface DropdownProps {
+  /** State of the dropdown */
   on: boolean;
+  /** Method to call if you want to toggle the state of the dropdown */
   toggle(): void;
 }
 
@@ -22,10 +24,10 @@ const useDropdownContext = (): DropdownProps => {
   const context = useContext(DropdownContext);
   if (!context) {
     throw new Error(
-      `InputGroup compound components cannot be rendered outside the InputGroup component`
+      `Dropdown compound components cannot be rendered outside the Dropdown component`
     );
   }
-  return context;
+  return context as DropdownProps;
 };
 
 function Button({ children, icon }) {
@@ -59,7 +61,7 @@ function Button({ children, icon }) {
 function Content({ children }) {
   const { on } = useDropdownContext();
 
-  const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles(() => ({
     collapse: {
       maxWidth: 300,
       width: "100%",

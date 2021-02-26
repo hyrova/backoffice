@@ -11,8 +11,8 @@ function MyApp({ Component, pageProps }) {
     interceptors: {
       request: ({ options }) => {
         options.headers = {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-          "Content-Type": "application/json;charset=utf-8"
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+          "Content-Type": "application/json;charset=utf-8",
         };
         return options;
       },
@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }) {
     <ThemeProvider theme={darkTheme}>
       {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
       <CssBaseline />
-      <HttpProvider options={globalOptions}>
+      <HttpProvider options={globalOptions} url="http://localhost/api">
         <AppWrapper>
           <LogicWrapper {...pageProps}>
             <Component {...pageProps} />

@@ -3,73 +3,81 @@ import { useAppContext } from "./context/state";
 import { useRouter } from "next/router";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import useFetch from "use-http";
+import { User } from "../typescript/interfaces";
 
-const fetchUser = async () => {
-  return new Promise(function (resolve, reject) {
-    // Setting 2000 ms time
-    setTimeout(resolve, 2000);
-  }).then(function () {
-    return {
-      pseudal: "yolo",
-      email: "yolo@mail.com",
-    };
-  });
-};
-
-const Guard = ({ auth, children }) => {
-  const { token, user, setuser } = useAppContext();
+const Guard = ({ auth, guest, children }) => {
+  const { token, setuser } = useAppContext();
   const [loading, setloading] = useState(true);
   const router = useRouter();
+  const { get, error } = useFetch("/me");
 
   useEffect(() => {
     checkUser();
   }, []);
 
-  useEffect(() => {
-    console.log("User changed");
-  }, [user]);
-
   const checkUser = async () => {
     const authRequired = auth === undefined ? true : auth;
+    const guestRequired = guest === undefined ? false : guest;
 
+    // Route is protected by authentication
     if (authRequired) {
       if (!token) {
-        router.replace("/login");
+        // We don't have any token, let's redirect to login
+        await router.replace("/login");
+        setloading(false);
+        return;
       }
 
-      const newUser = await fetchUser();
+      // We have a token so let's see if that user actually exists
+      const response = await get();
 
-      if (!newUser) {
-        router.replace("/login");
+      if (error) {
+        // We have an error, which probably means user doesn't exists, let's redirect to login
+        await router.replace("/login");
+        setloading(false);
+        return;
       }
 
-      setuser(newUser);
+      // We have a user, we update it in our global state, and end the loading
+      setuser(response.data);
       setloading(false);
-    } else {
-      setloading(false);
+      return;
+    }
+
+    if (guestRequired) {
       if (token) {
-        const newUser = await fetchUser();
-        if (newUser) {
-          setuser(newUser);
-        }
+        // We don't have any token, let's redirect to login
+        await router.replace("/");
+        setloading(false);
+        return;
+      }
+    }
+
+    // The page is not protected by authentication, we end the loading immediatly
+    setloading(false);
+
+    // Still, we try to update user data
+    if (token) {
+      const response = await get();
+      if (response.ok) {
+        setuser(response.data);
       }
     }
   };
 
   if (loading) {
     return (
-      <div>
-        <Grid
-          container
-          spacing={0}
-          direction="column"
-          alignItems="center"
-          justify="center"
-          style={{ minHeight: "100vh" }}
-        >
-          <CircularProgress />
-        </Grid>
-      </div>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: "100vh" }}
+      >
+        <CircularProgress />
+      </Grid>
     );
   }
 

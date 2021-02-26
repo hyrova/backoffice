@@ -18,5 +18,6 @@ function Login() {
 
 Login.layout = "guest";
 Login.auth = false;
+Login.guest = true;
 
 export default Login;

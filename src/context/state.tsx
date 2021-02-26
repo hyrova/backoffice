@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import createPersistedState from "use-persisted-state";
+import { User } from "../../typescript/interfaces";
 
 const AppContext = createContext(null);
 const useTokenState = createPersistedState("token");
