@@ -75,7 +75,7 @@ function Content({ children }) {
   );
 }
 
-function Anchor({ children, href, active }) {
+function Anchor({ children, href, active = false }) {
   const useStyles = makeStyles((theme) => ({
     link: {
       padding: theme.spacing(2, 3),
