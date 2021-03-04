@@ -1,6 +1,5 @@
 import { Box, Card, makeStyles, useMediaQuery } from "@material-ui/core";
 import React from "react";
-import LoginForm from "../../templates/LoginForm";
 
 export default function MobileFullHeightCard({ children }) {
   const matches = useMediaQuery("(min-width:600px)");

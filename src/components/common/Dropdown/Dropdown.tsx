@@ -9,7 +9,7 @@ import {
 import { ExpandLessRounded, ExpandMoreRounded } from "@material-ui/icons";
 import { useRouter } from "next/router";
 import { createContext, useContext } from "react";
-import { useToggle } from "../utils/hook";
+import { useToggle } from "../../../utils/hook";
 
 interface DropdownProps {
   on: boolean;
@@ -34,8 +34,10 @@ function Button({ children, icon }) {
   const useStyles = makeStyles((theme) => ({
     button: {
       width: "100%",
+      maxWidth: 300,
       padding: theme.spacing(2, 3),
       color: on ? theme.palette.primary.main : "inherit",
+      backgroundColor: on ? theme.palette.primary.main + "08" : "inherit",
     },
     icon: {
       marginRight: theme.spacing(2),
@@ -63,6 +65,7 @@ function Content({ children }) {
     collapse: {
       maxWidth: 300,
       width: "100%",
+      backgroundColor: on ? theme.palette.primary.main + "05" : "inherit",
     },
   }));
 
@@ -75,11 +78,12 @@ function Content({ children }) {
   );
 }
 
-function Anchor({ children, href, active = false }) {
+export function Anchor({ children, href, active = false }) {
   const useStyles = makeStyles((theme) => ({
     link: {
       padding: theme.spacing(2, 3),
       width: "100%",
+      maxWidth: 300,
       paddingLeft: 48 + theme.spacing(2),
       backgroundColor: active ? theme.palette.primary.main : "inherit",
     },

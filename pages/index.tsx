@@ -9,7 +9,7 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      Pseudo :{user.pseudal}
+      {/* Pseudo :{user.pseudal} */}
       {/* <p>{count}</p>
       <Button variant="contained" onClick={increment}>
         Increment

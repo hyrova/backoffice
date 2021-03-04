@@ -13,8 +13,7 @@ import { ExpandMoreOutlined } from "@material-ui/icons";
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
-import Dropdown from "../components/Dropdown";
-import Navigation from "../components/Navigation";
+import Navigation from "../components/features/Navigation/Navigation";
 import { useToggle } from "../utils/hook";
 
 function DefaultLayout(props) {

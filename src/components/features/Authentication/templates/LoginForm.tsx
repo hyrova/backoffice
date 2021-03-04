@@ -1,11 +1,11 @@
 import { Grid, makeStyles, Typography } from "@material-ui/core";
-import AppTextField from "../components/Form/TextField";
-import AppButton from "../components/Form/Button";
+import AppTextField from "../../../common/Form/TextField";
+import AppButton from "../../../common/Form/Button";
 import Image from "next/image";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import useFetch from "use-http";
-import { useAppContext } from "../context/state";
+import { useAppContext } from "../../../../context/state";
 import { useRouter } from "next/router";
 
 export default function LoginForm() {
