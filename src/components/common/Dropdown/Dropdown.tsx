@@ -78,7 +78,7 @@ function Content({ children }) {
   );
 }
 
-export function Anchor({ children, href, active = false }) {
+export function Anchor({ children, href = "", active = false, action = null }) {
   const useStyles = makeStyles((theme) => ({
     link: {
       padding: theme.spacing(2, 3),
@@ -93,7 +93,7 @@ export function Anchor({ children, href, active = false }) {
   const router = useRouter();
 
   return (
-    <ButtonBase onClick={() => router.push(href)} className={classes.link}>
+    <ButtonBase onClick={action ? action : () => router.push(href)} className={classes.link}>
       <Grid container justify="space-between" alignItems="center">
         {children}
       </Grid>

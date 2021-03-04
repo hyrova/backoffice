@@ -1,33 +1,54 @@
 export interface NavigationDropdown {
-    name: string
-    icon: string
-    subNavigation: Array<NavigationDropdown|NavigationLink>
+  name: string;
+  icon: string;
+  subNavigation: Array<NavigationDropdown | NavigationLink>;
 }
 
 export interface NavigationLink {
-    name: string
-    href: string
+  name: string;
+  href: string;
 }
 
-const navigation: Array<NavigationDropdown|NavigationLink> = [
-    {
-        name: 'Accueil',
-        href: '/'
-    },
-    {
-        name: 'Utilisateurs',
-        href: '/users'
-    },
-    {
-        name: 'Autre',
-        icon: 'ac_unit',
-        subNavigation: [
-            {
-                name: 'test',
-                href: 'test'
-            }
-        ]
-    }
-]
+export interface NavigationButton {
+  name: string;
+  action: string;
+}
 
-export default navigation
+const navigation: Array<
+  NavigationDropdown | NavigationLink | NavigationButton
+> = [
+  {
+    name: "Accueil",
+    href: "/",
+  },
+  {
+    name: "Utilisateurs",
+    href: "/users",
+  },
+  {
+    name: "Autre",
+    icon: "ac_unit",
+    subNavigation: [
+      {
+        name: "test",
+        href: "test",
+      },
+      {
+        name: "Autre2",
+        icon: "ac_unit",
+        subNavigation: [
+          {
+            name: "test2",
+            href: "test",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Se déconnecter",
+    action: "_logout",
+  },
+];
+
+export default navigation;
