@@ -17,7 +17,7 @@ export default function WideMobileFullHeightCard({ children }) {
       backgroundColor: theme.palette.grey[900],
       width: "100%",
       maxWidth: matches ? 800 : "none",
-      margin: "auto",
+      margin: matches ? theme.spacing(10, 0) : "auto",
       padding: theme.spacing(6, 5),
       height: matches ? "auto" : "100%",
     },

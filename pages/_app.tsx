@@ -3,11 +3,16 @@ import { useEffect } from "react";
 import { AppWrapper } from "../src/context/state";
 import LogicWrapper from "../src/LogicWrapper";
 import { darkTheme } from "../src/theme/theme";
-import { Provider as HttpProvider } from "use-http";
+import {
+  CachePolicies,
+  IncomingOptions,
+  Provider as HttpProvider,
+} from "use-http";
 import "../styles/globals.scss";
 
 function MyApp({ Component, pageProps }) {
-  const globalOptions = {
+  const globalOptions: IncomingOptions = {
+    cachePolicy: CachePolicies.NO_CACHE,
     interceptors: {
       request: ({ options }) => {
         options.headers = {
@@ -15,10 +20,6 @@ function MyApp({ Component, pageProps }) {
           "Content-Type": "application/json;charset=utf-8",
         };
         return options;
-      },
-      response: ({ response }) => {
-        console.log("initial response.data", response.data);
-        return response;
       },
     },
   };

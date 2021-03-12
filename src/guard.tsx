@@ -10,7 +10,7 @@ const Guard = ({ auth, guest, children }) => {
   const { token, setuser } = useAppContext();
   const [loading, setloading] = useState(true);
   const router = useRouter();
-  const { get, error } = useFetch("/me");
+  const { get, error, response } = useFetch("/me");
 
   useEffect(() => {
     checkUser();
@@ -30,9 +30,9 @@ const Guard = ({ auth, guest, children }) => {
       }
 
       // We have a token so let's see if that user actually exists
-      const response = await get();
+      const data = await get();
 
-      if (!response) {
+      if (!response.ok) {
         // We have an error, which probably means user doesn't exists, let's redirect to login
         await router.replace("/login");
         setloading(false);
@@ -40,7 +40,7 @@ const Guard = ({ auth, guest, children }) => {
       }
 
       // We have a user, we update it in our global state, and end the loading
-      setuser(response.data);
+      setuser(data.data);
       setloading(false);
       return;
     }
@@ -48,12 +48,12 @@ const Guard = ({ auth, guest, children }) => {
     if (guestRequired) {
       if (token) {        
         // We have a token so let's see if that user actually exists
-        const response = await get();
+        const data = await get();
         
-        if (response) {
+        if (response.ok) {
           // User exists, he should not be able to see this page
           await router.replace("/");
-          setuser(response.data);
+          setuser(data.data);
           setloading(false);
           return;
         }

@@ -1,49 +1,110 @@
-import { Grid, makeStyles, Typography } from "@material-ui/core";
+import {
+  makeStyles,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  IconButton,
+} from "@material-ui/core";
 import AppTextField from "../../../common/Form/TextField";
-import AppButton from "../../../common/Form/Button";
-import Image from "next/image";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import useFetch from "use-http";
-import { useAppContext } from "../../../../context/state";
 import { useRouter } from "next/router";
 import Pagination from "@material-ui/lab/Pagination";
+import React, { useCallback, useEffect, useState } from "react";
+import { User } from "../../../../../typescript/interfaces";
+import { MoreVert } from "@material-ui/icons";
+import _ from "lodash";
 
 const useStyles = makeStyles((theme) => ({
-  titles: {
-    marginTop: theme.spacing(2),
+  table: {
+    width: "100%",
   },
-  form: {
-    paddingTop: theme.spacing(3),
+  list: {
+    marginTop: theme.spacing(4),
   },
-  actions: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  button: {
-    fontWeight: "bold",
-    textTransform: "none",
+  pagination: {
+    marginTop: theme.spacing(4),
   },
 }));
 
 export default function UsersList() {
-  const { settoken } = useAppContext();
   const router = useRouter();
   const classes = useStyles();
-  const { post, response, loading, error } = useFetch("/admin/users");
+  const [data, setData] = useState<User[]>([]);
+  const [page, setPage] = useState(1);
+  const [maxPage, setMaxPage] = useState(1);
+  const [search, setSearch] = useState("");
 
-  // const _login = async (credentials) => {
-  //   // TODO detect device
-  //   const token = await post({ ...credentials, device: "device" });
+  const { get, loading, response } = useFetch();
 
-  //   if (response?.ok) {
-  //     settoken(token);
-  //     router.replace("/");
-  //   }
-  // };
+  const fetchUsers = async (page: number, search: string) => {
+    const data = await get(
+      `/admin/users?page=${page}&search=${search}&amountPerPage=15`
+    );
+
+    if (response.ok) {
+      setMaxPage(Math.ceil(data.meta.total / 10));
+      setData(data.data);
+    }
+  };
+
+  useEffect(() => {
+    setPage(1);
+    fetchUsers(1, search);
+  }, [search]);
+
+  const handlePage = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+    fetchUsers(value, search);
+  };
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    debounceSetSearch(event.target.value);
+  };
+
+  const debounceSetSearch = useCallback(_.debounce(setSearch, 250), []);
 
   return (
     <>
-      <Pagination count={10} siblingCount={0} />
+      <AppTextField label="Recherche" onChange={handleSearch} />
+
+      <TableContainer component={Paper} className={classes.list}>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell align="right">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.map((user) => (
+              <TableRow key={user.name}>
+                <TableCell component="th" scope="row">
+                  {user.name}
+                </TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell align="right">
+                  <IconButton component="span">
+                    <MoreVert />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      <Pagination
+        count={maxPage}
+        siblingCount={0}
+        page={page}
+        onChange={handlePage}
+        className={classes.pagination}
+      />
     </>
   );
 }
