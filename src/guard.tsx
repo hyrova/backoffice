@@ -46,11 +46,17 @@ const Guard = ({ auth, guest, children }) => {
     }
 
     if (guestRequired) {
-      if (token) {
-        // We don't have any token, let's redirect to login
-        await router.replace("/");
-        setloading(false);
-        return;
+      if (token) {        
+        // We have a token so let's see if that user actually exists
+        const response = await get();
+        
+        if (response) {
+          // User exists, he should not be able to see this page
+          await router.replace("/");
+          setuser(response.data);
+          setloading(false);
+          return;
+        }
       }
     }
 

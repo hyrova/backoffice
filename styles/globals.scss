@@ -8,3 +8,8 @@ body,
   display: flex;
   height: 100%;
 }
+
+.page-content {
+  flex: 1;
+  overflow-y: auto;
+}

@@ -34,9 +34,7 @@ function DefaultLayout(props) {
       </Head>
       <div className="page-container">
         <Navigation />
-        <div>
-          <div>{props.children}</div>
-        </div>
+        <div className="page-content">{props.children}</div>
       </div>
     </>
   );
