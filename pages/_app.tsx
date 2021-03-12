@@ -39,16 +39,16 @@ function MyApp({ Component, pageProps }) {
       <CssBaseline />
       <HttpProvider options={globalOptions} url="http://localhost/api">
         <AppWrapper>
-          <LogicWrapper {...pageProps}>
-            <SnackbarProvider
-              maxSnack={3}
-              TransitionComponent={Collapse}
-              autoHideDuration={3000}
-              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-            >
+          <SnackbarProvider
+            maxSnack={3}
+            TransitionComponent={Collapse}
+            autoHideDuration={3000}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          >
+            <LogicWrapper {...pageProps}>
               <Component {...pageProps} />
-            </SnackbarProvider>
-          </LogicWrapper>
+            </LogicWrapper>
+          </SnackbarProvider>
         </AppWrapper>
       </HttpProvider>
     </ThemeProvider>
