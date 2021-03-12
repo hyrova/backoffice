@@ -8,6 +8,9 @@ import {
   TableHead,
   TableRow,
   IconButton,
+  Menu,
+  MenuItem,
+  Button,
 } from "@material-ui/core";
 import AppTextField from "../../../common/Form/TextField";
 import useFetch from "use-http";
@@ -30,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UsersList() {
+export default function UserList() {
   const router = useRouter();
   const classes = useStyles();
   const [data, setData] = useState<User[]>([]);
@@ -55,6 +58,10 @@ export default function UsersList() {
     setPage(1);
     fetchUsers(1, search);
   }, [search]);
+
+  const handleClick = (id) => {
+    router.push(`/users/${id}`);
+  };
 
   const handlePage = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -88,9 +95,12 @@ export default function UsersList() {
                 </TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell align="right">
-                  <IconButton component="span">
-                    <MoreVert />
-                  </IconButton>
+                  <Button
+                    variant="outlined"
+                    onClick={() => handleClick(user.id)}
+                  >
+                    Editer
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

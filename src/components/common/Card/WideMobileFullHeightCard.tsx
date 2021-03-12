@@ -9,6 +9,7 @@ export default function WideMobileFullHeightCard({ children }) {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
+      padding: matches ? theme.spacing(0, 10) : "auto",
     },
     card: {
       display: "flex",

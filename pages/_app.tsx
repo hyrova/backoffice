@@ -1,4 +1,4 @@
-import { CssBaseline, ThemeProvider } from "@material-ui/core";
+import { Collapse, CssBaseline, ThemeProvider } from "@material-ui/core";
 import { useEffect } from "react";
 import { AppWrapper } from "../src/context/state";
 import LogicWrapper from "../src/LogicWrapper";
@@ -9,6 +9,7 @@ import {
   Provider as HttpProvider,
 } from "use-http";
 import "../styles/globals.scss";
+import { SnackbarProvider } from "notistack";
 
 function MyApp({ Component, pageProps }) {
   const globalOptions: IncomingOptions = {
@@ -18,7 +19,7 @@ function MyApp({ Component, pageProps }) {
         options.headers = {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
           "Content-Type": "application/json",
-          "Accept": "application/json",
+          Accept: "application/json",
         };
         return options;
       },
@@ -39,7 +40,14 @@ function MyApp({ Component, pageProps }) {
       <HttpProvider options={globalOptions} url="http://localhost/api">
         <AppWrapper>
           <LogicWrapper {...pageProps}>
-            <Component {...pageProps} />
+            <SnackbarProvider
+              maxSnack={3}
+              TransitionComponent={Collapse}
+              autoHideDuration={3000}
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            >
+              <Component {...pageProps} />
+            </SnackbarProvider>
           </LogicWrapper>
         </AppWrapper>
       </HttpProvider>
