@@ -63,7 +63,7 @@ function Button({ children, icon }) {
 function Content({ children }) {
   const { on } = useDropdownContext();
 
-  const useStyles = makeStyles(() => ({
+  const useStyles = makeStyles((theme) => ({
     collapse: {
       maxWidth: 300,
       width: "100%",

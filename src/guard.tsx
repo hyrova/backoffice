@@ -32,7 +32,7 @@ const Guard = ({ auth, guest, children }) => {
       // We have a token so let's see if that user actually exists
       const response = await get();
 
-      if (error) {
+      if (!response) {
         // We have an error, which probably means user doesn't exists, let's redirect to login
         await router.replace("/login");
         setloading(false);
@@ -60,7 +60,7 @@ const Guard = ({ auth, guest, children }) => {
     // Still, we try to update user data
     if (token) {
       const response = await get();
-      if (response.ok) {
+      if (response?.ok) {
         setuser(response.data);
       }
     }

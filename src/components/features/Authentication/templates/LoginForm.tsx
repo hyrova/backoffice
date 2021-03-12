@@ -50,7 +50,7 @@ export default function LoginForm() {
     // TODO detect device
     const token = await post({ ...credentials, device: "device" });
 
-    if (response.ok) {
+    if (response?.ok) {
       settoken(token);
       router.replace("/");
     }
