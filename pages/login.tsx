@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
-import LoginForm from "../src/templates/LoginForm";
-import MobileFullHeightCard from "../src/components/Card/MobileFullHeightCard";
+import LoginForm from "../src/components/features/Authentication/templates/LoginForm";
+import MobileFullHeightCard from "../src/components/common/Card/MobileFullHeightCard";
 
 function Login() {
   return (
