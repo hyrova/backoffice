@@ -17,7 +17,8 @@ function MyApp({ Component, pageProps }) {
       request: ({ options }) => {
         options.headers = {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-          "Content-Type": "application/json;charset=utf-8",
+          "Content-Type": "application/json",
+          "Accept": "application/json",
         };
         return options;
       },
