@@ -20,4 +20,12 @@ Login.layout = "guest";
 Login.auth = false;
 Login.guest = true;
 
-export default Login;
+const withParams = (classe: any) => {
+  classe.layout = "guest";
+  classe.auth = false;
+  classe.guest = true;
+
+  return classe;
+};
+
+export default withParams(Login);
