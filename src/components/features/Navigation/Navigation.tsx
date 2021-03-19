@@ -36,12 +36,12 @@ export default function Navigation() {
 
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-  const matches = useMediaQuery("(min-width:600px)");
+  const matches = useMediaQuery("(min-width:1000px)");
 
   const useStyles = makeStyles((theme) => ({
     drawer: {
       backgroundColor: theme.palette.grey[900],
-      maxWidth: 300,
+      maxWidth: 250,
     },
   }));
 

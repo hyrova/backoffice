@@ -2,7 +2,7 @@ import { Box, Card, makeStyles, useMediaQuery } from "@material-ui/core";
 import React from "react";
 
 export default function WideMobileFullHeightCard({ children }) {
-  const matches = useMediaQuery("(min-width:600px)");
+  const matches = useMediaQuery("(min-width:1000px)");
 
   const useStyles = makeStyles((theme) => ({
     box: {

@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps }) {
     <ThemeProvider theme={darkTheme}>
       {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
       <CssBaseline />
-      <HttpProvider options={globalOptions} url="http://localhost/api">
+      <HttpProvider options={globalOptions}>
         <AppWrapper>
           <SnackbarProvider
             maxSnack={3}
