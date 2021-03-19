@@ -30,7 +30,7 @@ const useStyles = makeStyles(() =>
 export default function AppButton(props: AppButtonProps) {
   const classes = useStyles();
 
-  const { disabled, loading, children, ...rest } = props;
+  const { disabled, loading, children, color, ...rest } = props;
 
   return (
     <div className={classes.wrapper}>
@@ -38,7 +38,7 @@ export default function AppButton(props: AppButtonProps) {
         {...rest}
         type="submit"
         variant="contained"
-        color="primary"
+        color={color || "primary"}
         disabled={disabled || loading}
       >
         {children}

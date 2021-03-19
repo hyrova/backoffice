@@ -7,11 +7,14 @@ import { User } from "../../../../../typescript/interfaces";
 import AppButton from "../../../common/Form/Button";
 import AppTextField from "../../../common/Form/TextField";
 import * as Yup from "yup";
-import { Grid, makeStyles } from "@material-ui/core";
+import { Grid, makeStyles, CircularProgress } from "@material-ui/core";
 import _ from "lodash";
 import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles((theme) => ({
+  form: {
+    width: "100%",
+  },
   actions: {
     margin: theme.spacing(3, 0, 2),
   },
@@ -30,7 +33,7 @@ export default function UserShow() {
 
   const [user, setUser] = useState<User>(null);
 
-  const { loading, error, get, put, response } = useFetch(
+  const { loading, error, get, put, del, patch, response } = useFetch(
     `http://localhost/api/admin/users/` + id
   );
 
@@ -38,14 +41,18 @@ export default function UserShow() {
     const data = await get();
 
     if (response.ok) {
-      setUser(data.data);
-      formik.resetForm({
-        values: {
-          name: data.data.name,
-          email: data.data.email,
-        },
-      });
+      _setUser(data.data);
     }
+  };
+
+  const _setUser = (user) => {
+    setUser(user);
+    formik.resetForm({
+      values: {
+        name: user.name,
+        email: user.email,
+      },
+    });
   };
 
   useEffect(() => {
@@ -68,13 +75,7 @@ export default function UserShow() {
       console.log({ change });
       await put(change)
         .then((data) => {
-          setUser(data.data);
-          actions.resetForm({
-            values: {
-              name: data.data.name,
-              email: data.data.email,
-            },
-          });
+          _setUser(data.data);
           enqueueSnackbar("Utilisateur mis à jour avec succès", {
             variant: "success",
           });
@@ -85,30 +86,72 @@ export default function UserShow() {
     },
   });
 
+  const _remove = () => {
+    del().then((data) => {
+      _setUser(data.data);
+    });
+  };
+
+  const _restore = () => {
+    patch().then((data) => {
+      _setUser(data.data);
+    });
+  };
+
+  if (!user) {
+    return <CircularProgress />;
+  }
+
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <AppTextField
-        id="standard-basic"
-        name="name"
-        label="Name"
-        formik={formik}
-      />
-      <AppTextField
-        name="email"
-        id="standard-basic"
-        label="Email"
-        formik={formik}
-        type="email"
-      />
+    <>
       <Grid container justify="flex-end" className={classes.actions}>
-        <AppButton
-          className={classes.button}
-          loading={formik.isSubmitting}
-          disabled={!formik.dirty}
-        >
-          Sauvegarder
-        </AppButton>
+        {user.trashed && (
+          <AppButton
+            className={classes.button}
+            loading={loading}
+            color="primary"
+            onClick={_restore}
+          >
+            Débloquer
+          </AppButton>
+        )}
+        {!user.trashed && (
+          <AppButton
+            className={classes.button}
+            loading={loading}
+            color="secondary"
+            onClick={_remove}
+          >
+            Bloquer
+          </AppButton>
+        )}
       </Grid>
-    </form>
+      <form className={classes.form} onSubmit={formik.handleSubmit}>
+        <AppTextField
+          id="standard-basic"
+          name="name"
+          label="Name"
+          disabled={user.trashed}
+          formik={formik}
+        />
+        <AppTextField
+          name="email"
+          id="standard-basic"
+          label="Email"
+          formik={formik}
+          disabled={user.trashed}
+          type="email"
+        />
+        <Grid container justify="flex-end" className={classes.actions}>
+          <AppButton
+            className={classes.button}
+            loading={formik.isSubmitting}
+            disabled={!formik.dirty}
+          >
+            Sauvegarder
+          </AppButton>
+        </Grid>
+      </form>
+    </>
   );
 }
