@@ -9,7 +9,9 @@ export default function WideMobileFullHeightCard({ children }) {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      padding: matches ? theme.spacing(0, 10) : "auto",
+      padding: matches ? theme.spacing(0, 10) : "unset",
+      // height: "100%"
+      minHeight: "100vh"
     },
     card: {
       display: "flex",
@@ -20,6 +22,7 @@ export default function WideMobileFullHeightCard({ children }) {
       maxWidth: matches ? 800 : "none",
       margin: matches ? theme.spacing(10, 0) : "auto",
       padding: theme.spacing(6, 5),
+      minHeight: matches ? "auto" : "100vh",
       height: matches ? "auto" : "100%",
     },
   }));
@@ -27,7 +30,7 @@ export default function WideMobileFullHeightCard({ children }) {
   const classes = useStyles();
 
   return (
-    <Box height="100%" className={classes.box}>
+    <Box className={classes.box}>
       <Card
         square={!matches}
         variant={matches ? "outlined" : "elevation"}
