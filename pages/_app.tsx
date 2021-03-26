@@ -20,6 +20,7 @@ function MyApp({ Component, pageProps }) {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
           "Content-Type": "application/json",
           Accept: "application/json",
+          withCredentials: "true"
         };
         return options;
       },
