@@ -50,7 +50,7 @@ export default function LoginForm() {
     // TODO detect device
     const token = await post({
       ...credentials,
-      device: MediaDeviceInfo.deviceId,
+      device: navigator.userAgent,
     });
 
     if (response?.ok) {
