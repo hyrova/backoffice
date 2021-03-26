@@ -34,7 +34,7 @@ export default function UserShow() {
   const [user, setUser] = useState<User>(null);
 
   const { loading, error, get, put, del, patch, response } = useFetch(
-    `http://localhost/api/admin/users/` + id
+    `/admin/users/` + id
   );
 
   const fetchUser = async () => {
